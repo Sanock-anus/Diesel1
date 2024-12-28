@@ -3,42 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diesel - Игровой Хостинг</title>
+    <title>Главная</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-left">
-                <h1>Diesel</h1>
-                <nav>
-                  <a href="login.html" id="loginBtn">Вход</a>
-                  <a href="register.html" id="registerBtn">Регистрация</a>
-                  <a href="account.html" id="accountBtn">Аккаунт</a>
-               </nav>
-            </div>
-            <div class="header-right">
-             <a href="dashboard.html" class="button create-host-btn">Создать хост</a>
-           </div>
-        </div>
-    </header>
+  <header>
+      <h1>Игровой портал</h1>
+      <nav>
+          <a href="login.html" id="loginBtn">Вход</a>
+          <a href="register.html" id="registerBtn">Регистрация</a>
+          <a href="account.html" id="accountBtn">Аккаунт</a>
+          <a href="my-games.html" id="myGamesBtn" style="display: none;">Мои карточки</a>
+      </nav>
+  </header>
     <main>
-        <section class="container main-content">
-          <div class="search-container">
-                <input type="text" placeholder="Поиск игр...">
-                <button class="search-button">Поиск</button>
-            </div>
+        <section class="game-list-container">
+             <h2>Список игр</h2>
             <div id="gameList" class="game-list">
-               <p class="empty-list-message">Список игр пуст, загрузите игру!</p>
+                 <p class="empty-list-message">Загрузите игры!</p>
             </div>
         </section>
     </main>
     <footer>
-        <div class="container">
-            <p>Техническая поддержка: <a href="https://t.me/s_studio_projekt1">t.me/s_studio_projekt1</a></p>
-            <p>&copy; 2024 Diesel. Все права защищены.</p>
-        </div>
+         <p>&copy; 2024 Игровой портал</p>
     </footer>
-     <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
