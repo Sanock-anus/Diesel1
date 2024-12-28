@@ -121,11 +121,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const gameList = document.getElementById('game-list');
     const libraryList = document.getElementById('library-list');
     let library = JSON.parse(localStorage.getItem('dieselLibrary')) || [];
-    let games = JSON.parse(localStorage.getItem('dieselGames')) || [];
 
 
-    updateGames();
-    updateLibrary();
+    let games = [
+      {
+        gameId: Date.now(),
+        name: "Пример игры 1",
+        description: "Это первая игра. Добавте еще.",
+        imageUrl: "https://via.placeholder.com/200",
+        gameFile: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        gamePrice: 5,
+        gameAuthor: "Example User"
+    }
+    ];
+   updateGames();
+   updateLibrary();
+
 
     addGameButton.onclick = function() {
         addGameModal.style.display = "block";
@@ -135,91 +146,87 @@ document.addEventListener('DOMContentLoaded', function () {
         addGameModal.style.display = "none";
     }
 
-
-    addGameForm.onsubmit = function(event) {
+      addGameForm.onsubmit = function(event) {
         event.preventDefault();
-        const name = document.getElementById('gameName').value;
+         const name = document.getElementById('gameName').value;
         const description = document.getElementById('gameDescription').value;
         const imageUrl = document.getElementById('gameImage').value;
         const gamePrice = parseFloat(document.getElementById('gamePrice').value);
         const gameFile = document.getElementById('gameFile').value;
-        const gameId = Date.now();
+          const gameId = Date.now();
 
         const newGame = {
             gameId: gameId,
             name: name,
             description: description,
             imageUrl: imageUrl,
-            gameFile:gameFile,
-            gamePrice: gamePrice,
-            gameAuthor: currentUsername
-        };
+            gameFile: gameFile,
+             gamePrice: gamePrice,
+              gameAuthor: currentUsername
+         };
 
-        games = JSON.parse(localStorage.getItem('dieselGames')) || [];
-        games.push(newGame);
-        localStorage.setItem('dieselGames',JSON.stringify(games));
+        games.push(newGame)
+       updateGames();
 
-        updateGames();
-          const gameCard = document.createElement('div');
+
+        const gameCard = document.createElement('div');
         gameCard.classList.add('game-card');
-          gameCard.dataset.gameId = gameId;
+        gameCard.dataset.gameId = gameId;
         gameCard.dataset.gameFile = gameFile;
-         gameCard.dataset.gamePrice = gamePrice;
-          gameCard.dataset.gameAuthor = currentUsername;
-
+          gameCard.dataset.gamePrice = gamePrice;
+         gameCard.dataset.gameAuthor = currentUsername;
 
         gameCard.innerHTML = `
-            <img src="${imageUrl}" alt="${name}">
+             <img src="${imageUrl}" alt="${name}">
             <div class="card-content">
                 <h3>${name}</h3>
                 <p>${description}</p>
-                <button class="donate-button">Пожертвовать</button>
-                <button class="play-button">Играть</button>
-               ${currentUsername ? '<button class="delete-button">Удалить</button>' : ''}
+                 <button class="donate-button">Пожертвовать</button>
+                  <button class="play-button">Играть</button>
+                 ${currentUsername ? '<button class="delete-button">Удалить</button>' : ''}
             </div>
         `;
-
-        gameCard.querySelector('.donate-button').addEventListener('click', function(){
+      gameCard.querySelector('.donate-button').addEventListener('click', function(){
             const donateModal = document.getElementById('donateModal');
             const confirmDonateButton = document.getElementById('confirmDonateButton')
             const donateGameName = document.getElementById('donateGameName');
-            const donateGamePrice = document.getElementById('donateGamePrice')
-            donateGameName.textContent = name;
-            donateGamePrice.textContent = gamePrice;
-            donateModal.style.display = "block";
-
+               const donateGamePrice = document.getElementById('donateGamePrice')
+              donateGameName.textContent = name;
+             donateGamePrice.textContent = gamePrice;
+              donateModal.style.display = "block";
             confirmDonateButton.onclick = function(){
                 if(userBalance >= gamePrice){
                     donateModal.style.display = "none";
-                    addToLibrary(gameId, name, description, imageUrl,gameFile);
+                     addToLibrary(gameId, name, description, imageUrl,gameFile);
                     userBalance -= gamePrice;
-                    updateBalance();
-                } else{
-                    alert('Недостаточно средств на счету');
-                }
+                     updateBalance();
+                   } else{
+                        alert('Недостаточно средств на счету');
+                   }
             };
-            donateModal.querySelector('.close').addEventListener('click', function (){
+          donateModal.querySelector('.close').addEventListener('click', function (){
                 donateModal.style.display = "none"
-            })
+             })
         });
 
-
-        gameCard.querySelector('.play-button').addEventListener('click',function (){
-            showGamePage(name,description,imageUrl,gameFile);
+       gameCard.querySelector('.play-button').addEventListener('click',function (){
+          showGamePage(name,description,imageUrl,gameFile);
         })
 
 
         if (currentUsername) {
             gameCard.querySelector('.delete-button')?.addEventListener('click', function (){
-                 deleteGame(gameId);
+                  deleteGame(gameId);
             });
         }
-        gameList.appendChild(gameCard);
-        addGameModal.style.display = 'none';
-        addGameForm.reset();
+
+
+         gameList.appendChild(gameCard);
+         addGameModal.style.display = 'none';
+         addGameForm.reset();
     };
 
-    window.onclick = function(event){
+     window.onclick = function(event){
         if (event.target === addGameModal) {
             addGameModal.style.display = "none";
         }
@@ -233,73 +240,74 @@ document.addEventListener('DOMContentLoaded', function () {
             registerModal.style.display = "none";
         }
     }
-    function deleteGame(gameId) {
-        games = games.filter(game => game.gameId !== gameId);
-        localStorage.setItem('dieselGames', JSON.stringify(games));
-        updateGames();
-    }
+
+
+     function deleteGame(gameId) {
+         games = games.filter(game => game.gameId !== gameId);
+        updateGames()
+     }
+
+
     function addToLibrary(gameId, name, description, imageUrl,gameFile){
-        library.push({gameId, name, description, imageUrl,gameFile});
-        localStorage.setItem('dieselLibrary', JSON.stringify(library))
-        updateLibrary();
-    }
+          library.push({gameId, name, description, imageUrl,gameFile});
+          localStorage.setItem('dieselLibrary', JSON.stringify(library))
+         updateLibrary();
+      }
+
+
 
     function updateGames() {
         gameList.innerHTML = "";
-        games = JSON.parse(localStorage.getItem('dieselGames')) || [];
         games.forEach(game => {
             const gameCard = document.createElement('div');
             gameCard.classList.add('game-card');
             gameCard.dataset.gameId = game.gameId;
-            gameCard.dataset.gameFile = game.gameFile;
-            gameCard.dataset.gamePrice = game.gamePrice;
+              gameCard.dataset.gameFile = game.gameFile;
+             gameCard.dataset.gamePrice = game.gamePrice;
               gameCard.dataset.gameAuthor = game.gameAuthor;
-
             gameCard.innerHTML = `
-                <img src="${game.imageUrl}" alt="${game.name}">
+                 <img src="${game.imageUrl}" alt="${game.name}">
                 <div class="card-content">
                     <h3>${game.name}</h3>
                     <p>${game.description}</p>
                     <button class="donate-button">Пожертвовать</button>
-                     <button class="play-button">Играть</button>
+                    <button class="play-button">Играть</button>
                       ${currentUsername === game.gameAuthor ? '<button class="delete-button">Удалить</button>' : ''}
-                </div>
+                 </div>
             `;
-
-           gameCard.querySelector('.donate-button').addEventListener('click', function(){
-               const donateModal = document.getElementById('donateModal');
+          gameCard.querySelector('.donate-button').addEventListener('click', function(){
+              const donateModal = document.getElementById('donateModal');
                 const confirmDonateButton = document.getElementById('confirmDonateButton')
-               const donateGameName = document.getElementById('donateGameName');
+              const donateGameName = document.getElementById('donateGameName');
                  const donateGamePrice = document.getElementById('donateGamePrice')
                 donateGameName.textContent = game.name;
                donateGamePrice.textContent = game.gamePrice;
                 donateModal.style.display = "block";
-              confirmDonateButton.onclick = function(){
-                   if(userBalance >= game.gamePrice){
+               confirmDonateButton.onclick = function(){
+                    if(userBalance >= game.gamePrice){
                        donateModal.style.display = "none";
-                       addToLibrary(game.gameId, game.name, game.description, game.imageUrl,game.gameFile);
-                       userBalance -= game.gamePrice;
-                        updateBalance();
-                    } else{
+                        addToLibrary(game.gameId, game.name, game.description, game.imageUrl,game.gameFile);
+                        userBalance -= game.gamePrice;
+                       updateBalance();
+                   } else{
                        alert('Недостаточно средств на счету');
-                     }
-               };
-              donateModal.querySelector('.close').addEventListener('click', function (){
-                   donateModal.style.display = "none"
-                })
-           });
-
-            gameCard.querySelector('.play-button').addEventListener('click',function (){
+                  }
+              };
+             donateModal.querySelector('.close').addEventListener('click', function (){
+                donateModal.style.display = "none"
+             })
+         });
+           gameCard.querySelector('.play-button').addEventListener('click',function (){
                showGamePage(game.name, game.description,game.imageUrl,game.gameFile);
-            })
+          })
 
-            if (currentUsername === game.gameAuthor) {
-                gameCard.querySelector('.delete-button')?.addEventListener('click', function (){
-                   deleteGame(game.gameId);
-                });
-            }
+         if (currentUsername === game.gameAuthor) {
+               gameCard.querySelector('.delete-button')?.addEventListener('click', function (){
+                     deleteGame(game.gameId);
+               });
+         }
 
-            gameList.appendChild(gameCard);
+         gameList.appendChild(gameCard);
         });
     }
     function showGamePage(name, description, imageUrl, gameFile) {
@@ -318,16 +326,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
     function updateLibrary(){
-        libraryList.innerHTML = "";
-        library.forEach(game=>{
+          libraryList.innerHTML = "";
+            library.forEach(game=>{
             const gameCard = document.createElement('div');
-            gameCard.classList.add('game-card');
+           gameCard.classList.add('game-card');
             gameCard.dataset.gameId = game.gameId;
-            gameCard.dataset.gameFile = game.gameFile;
+           gameCard.dataset.gameFile = game.gameFile;
 
-            gameCard.innerHTML = `
+           gameCard.innerHTML = `
                 <img src="${game.imageUrl}" alt="${game.name}">
                 <div class="card-content">
                     <h3>${game.name}</h3>
@@ -335,12 +342,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     <button class="play-button">Играть</button>
                 </div>
             `;
-
             gameCard.querySelector('.play-button').addEventListener('click',function (){
                showGamePage(game.name,game.description,game.imageUrl,game.gameFile);
-           })
+         })
 
-            libraryList.appendChild(gameCard)
-        });
+           libraryList.appendChild(gameCard)
+       });
     }
 });
