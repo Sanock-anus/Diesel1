@@ -3,40 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diesel - Вход</title>
-     <link rel="stylesheet" href="style.css">
+    <title>Вход</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-left">
-                <h1>Diesel</h1>
-                 <nav>
-                    <a href="index.html">Главная</a>
-                     <a href="register.html">Регистрация</a>
-                     <a href="account.html">Аккаунт</a>
-                 </nav>
-            </div>
-        </div>
-    </header>
-    <main>
-        <section class="container main-content">
-            <h2>Вход</h2>
-             <form id="loginForm">
-                    <label for="login-email">Email:</label>
-                    <input type="email" id="login-email" name="login-email"><br><br>
-                   <label for="login-password">Пароль:</label>
-                    <input type="password" id="login-password" name="login-password"><br><br>
-                   <button type="submit" class="button">Войти</button>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Diesel. Все права защищены.</p>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+<header>
+  <h1>Игровой портал</h1>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="register.html">Регистрация</a>
+    <a href="account.html">Аккаунт</a>
+    <a href="my-games.html" id="myGamesBtn" style="display:none;">Мои карточки</a>
+  </nav>
+</header>
+<main>
+  <section class="login-container">
+    <h2>Вход</h2>
+    <form id="loginForm">
+      <input type="email" id="login-email" placeholder="Email" required>
+      <input type="password" id="login-password" placeholder="Пароль" required>
+      <button type="submit" class="button">Войти</button>
+    </form>
+  </section>
+</main>
+<footer>
+  <p>&copy; 2024 Игровой портал</p>
+</footer>
+<script src="script.js"></script>
 </body>
-</html>
 </html>
