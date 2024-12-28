@@ -14,9 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
          event.preventDefault();
          const gameName = document.getElementById('gameName').value;
         const gameFile = document.getElementById('gameFile').files[0];
+        const isPrivate = document.getElementById('isPrivate').checked;
          if (gameName && gameFile) {
             const user = JSON.parse(localStorage.getItem('user'));
-             const game = { name: gameName, file: gameFile.name, uploader: user.username ? user.username : user.email };
+             const game = { name: gameName, file: gameFile.name, uploader: user.username ? user.username : user.email, private: isPrivate };
            let games = JSON.parse(localStorage.getItem('games') || '[]');
             games.push(game);
             localStorage.setItem('games', JSON.stringify(games));
@@ -127,12 +128,11 @@ document.addEventListener('DOMContentLoaded', function() {
        const gameList = document.getElementById('gameList');
          const games = JSON.parse(localStorage.getItem('games') || '[]');
         gameList.innerHTML = ""; // clear the list
-      if (games.length === 0) {
+      if (games.filter(game => !game.private).length === 0) {
         gameList.innerHTML = '<p class="empty-list-message">Список игр пуст, загрузите игру!</p>';
-    }
-       else {
+      } else {
               const user = JSON.parse(localStorage.getItem('user'));
-               games.forEach((game, index) => {
+             games.filter(game => !game.private).forEach((game, index) => {
                const gameItem = document.createElement('div');
                gameItem.classList.add('game-item');
                const authorIcon = localStorage.getItem('profileIcon');
@@ -162,7 +162,58 @@ document.addEventListener('DOMContentLoaded', function() {
              installGame(name, file);
         }
     });
+      // Проверка на авторизованность и добавление кнопки "Мои карточки"
+      const user = localStorage.getItem('user');
+      const myGamesBtn = document.getElementById('myGamesBtn');
+      if (user && myGamesBtn){
+        myGamesBtn.style.display = 'block';
+      }
+      else if(myGamesBtn){
+       myGamesBtn.style.display = 'none';
+      }
 }
+   // Загрузка "Моих карточек"
+  if (window.location.pathname.includes('my-games.html')) {
+      const myGameList = document.getElementById('myGameList');
+       const user = JSON.parse(localStorage.getItem('user'));
+      const games = JSON.parse(localStorage.getItem('games') || '[]');
+        const myGames = games.filter(game => game.uploader === user.username || game.uploader === user.email);
+
+      myGameList.innerHTML = "";
+      if (myGames.length === 0) {
+          myGameList.innerHTML = '<p class="empty-list-message">Вы еще не загрузили игры.</p>';
+      }
+       else{
+            myGames.forEach((game, index) => {
+             const gameItem = document.createElement('div');
+               gameItem.classList.add('game-item');
+               const authorIcon = localStorage.getItem('profileIcon');
+               let deleteButton = '';
+                if (user && (game.uploader === user.username || game.uploader === user.email)) {
+                   deleteButton = `<button class="delete-game-btn button" data-index="${index}">Удалить</button>`;
+               }
+               const installButton = `<button class="install-game-btn button" data-name="${game.name}" data-file="${game.file}">Установить</button>`;
+             gameItem.innerHTML = `
+               <div class="game-header">
+                  <img src="${authorIcon || 'default-icon.png'}" alt="Аватар" class="author-avatar">
+                 <h3>${game.name}</h3>
+              </div>
+               <p>Загрузил: ${game.uploader}</p><p>File: ${game.file}</p>${deleteButton}${installButton}`;
+             myGameList.appendChild(gameItem);
+           });
+      }
+      myGameList.addEventListener('click', function(event) {
+          if (event.target.classList.contains('delete-game-btn')) {
+             const index = event.target.getAttribute('data-index');
+             deleteGame(index);
+          }
+           if(event.target.classList.contains('install-game-btn')){
+             const name = event.target.getAttribute('data-name');
+            const file = event.target.getAttribute('data-file');
+             installGame(name, file);
+        }
+      });
+   }
 });
 // Функция удаления игры
 function deleteGame(index) {
@@ -171,28 +222,58 @@ function deleteGame(index) {
     localStorage.setItem('games', JSON.stringify(games));
   // Перезагружаем список игр
     const gameList = document.getElementById('gameList');
-   gameList.innerHTML = "";
-      if (games.length === 0) {
+  if (gameList) {
+     gameList.innerHTML = "";
+      if (games.filter(game => !game.private).length === 0) {
           gameList.innerHTML = '<p class="empty-list-message">Список игр пуст, загрузите игру!</p>';
       } else {
-         const user = JSON.parse(localStorage.getItem('user'));
-        games.forEach((game, index) => {
-           const gameItem = document.createElement('div');
-           gameItem.classList.add('game-item');
-           const authorIcon = localStorage.getItem('profileIcon');
-          let deleteButton = '';
-        if (user && (game.uploader === user.username || game.uploader === user.email) ) {
-            deleteButton = `<button class="delete-game-btn button" data-index="${index}">Удалить</button>`;
-       }
-          const installButton = `<button class="install-game-btn button" data-name="${game.name}" data-file="${game.file}">Установить</button>`;
-         gameItem.innerHTML = `
+          const user = JSON.parse(localStorage.getItem('user'));
+           games.filter(game => !game.private).forEach((game, index) => {
+              const gameItem = document.createElement('div');
+              gameItem.classList.add('game-item');
+              const authorIcon = localStorage.getItem('profileIcon');
+              let deleteButton = '';
+             if (user && (game.uploader === user.username || game.uploader === user.email)) {
+                deleteButton = `<button class="delete-game-btn button" data-index="${index}">Удалить</button>`;
+              }
+             const installButton = `<button class="install-game-btn button" data-name="${game.name}" data-file="${game.file}">Установить</button>`;
+            gameItem.innerHTML = `
               <div class="game-header">
                  <img src="${authorIcon || 'default-icon.png'}" alt="Аватар" class="author-avatar">
                  <h3>${game.name}</h3>
               </div>
+              <p>Загрузил: ${game.uploader}</p><p>File: ${game.file}</p>${deleteButton}${installButton}`;
+            gameList.appendChild(gameItem);
+          });
+      }
+ }
+  const myGameList = document.getElementById('myGameList');
+  if (myGameList) {
+    const user = JSON.parse(localStorage.getItem('user'));
+     const myGames = games.filter(game => game.uploader === user.username || game.uploader === user.email);
+      myGameList.innerHTML = "";
+       if (myGames.length === 0) {
+          myGameList.innerHTML = '<p class="empty-list-message">Вы еще не загрузили игры.</p>';
+      }
+       else {
+          myGames.forEach((game, index) => {
+            const gameItem = document.createElement('div');
+              gameItem.classList.add('game-item');
+              const authorIcon = localStorage.getItem('profileIcon');
+              let deleteButton = '';
+              if (user && (game.uploader === user.username || game.uploader === user.email)) {
+                   deleteButton = `<button class="delete-game-btn button" data-index="${index}">Удалить</button>`;
+               }
+               const installButton = `<button class="install-game-btn button" data-name="${game.name}" data-file="${game.file}">Установить</button>`;
+              gameItem.innerHTML = `
+                 <div class="game-header">
+                     <img src="${authorIcon || 'default-icon.png'}" alt="Аватар" class="author-avatar">
+                   <h3>${game.name}</h3>
+               </div>
                <p>Загрузил: ${game.uploader}</p><p>File: ${game.file}</p>${deleteButton}${installButton}`;
-           gameList.appendChild(gameItem);
-      });
+            myGameList.appendChild(gameItem);
+        });
+     }
  }
 }
 function installGame(name, file) {
