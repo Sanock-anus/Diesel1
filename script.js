@@ -123,10 +123,10 @@ document.addEventListener('DOMContentLoaded', function() {
           daysRegisteredSpan.textContent = diffInDays;
       }
   }
-  // Функция для отрисовки списка игр на index.html.
+   // Функция для отрисовки списка игр на index.html.
 function displayGames(gameList, games) {
     gameList.innerHTML = "";
-    const publicGames = games.filter(game => !game.private);
+      const publicGames = games.filter(game => !game.private); // отфильтровали публичные игры
     if (publicGames.length === 0) {
         gameList.innerHTML = '<p class="empty-list-message">Список игр пуст, загрузите игру!</p>';
     } else {
