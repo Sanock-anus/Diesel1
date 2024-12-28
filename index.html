@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная</title>
+    <title>Game Portal</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-      <h1>Игровой портал</h1>
-      <nav>
-          <a href="login.html" id="loginBtn">Вход</a>
-          <a href="register.html" id="registerBtn">Регистрация</a>
-          <a href="account.html" id="accountBtn">Аккаунт</a>
-          <a href="my-games.html" id="myGamesBtn" style="display: none;">Мои карточки</a>
-      </nav>
-  </header>
+    <header>
+        <h1>Game Portal</h1>
+        <nav>
+            <a href="login.html" id="loginBtn">Login</a>
+            <a href="register.html" id="registerBtn">Register</a>
+            <a href="account.html" id="accountBtn">Account</a>
+            <a href="my-games.html" id="myGamesBtn" style="display: none;">My Cards</a>
+        </nav>
+    </header>
     <main>
-        <section class="game-list-container">
-             <h2>Список игр</h2>
-            <div id="gameList" class="game-list">
-                 <p class="empty-list-message">Загрузите игры!</p>
-            </div>
+        <section>
+            <h2>Game List</h2>
+           <div id="gameList" class="game-list">
+              <p class="empty-list-message">List of games is empty. Please upload the game!</p>
+           </div>
         </section>
     </main>
     <footer>
-         <p>&copy; 2024 Игровой портал</p>
+        <p>&copy; 2024 Game Portal</p>
     </footer>
     <script src="script.js"></script>
 </body>
