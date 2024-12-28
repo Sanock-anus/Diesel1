@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     // Функция для отрисовки списка игр на index.html.
     async function displayGames(gameList) {
-        gameList.innerHTML = '';
+         gameList.innerHTML = '';
         try {
             const response = await fetch('http://localhost:3000/games');
             if (response.ok) {
@@ -178,9 +178,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Загрузка игр на index.html
     if (window.location.pathname.includes('index.html')) {
         const gameList = document.getElementById('gameList');
-        displayGames(gameList);
-        // Проверка на авторизованность и добавление кнопки "Мои карточки"
-        const user = localStorage.getItem('user');
+          // Загружаем игры только после полной загрузки DOM
+        displayGames(gameList).then(() => {
+         // Проверка на авторизованность и добавление кнопки "Мои карточки"
+           const user = localStorage.getItem('user');
         const myGamesBtn = document.getElementById('myGamesBtn');
         if (user && myGamesBtn){
             myGamesBtn.style.display = 'block';
@@ -188,6 +189,8 @@ document.addEventListener('DOMContentLoaded', function() {
         else if(myGamesBtn){
             myGamesBtn.style.display = 'none';
         }
+    })
+
     }
     // Загрузка "Моих карточек"
   if (window.location.pathname.includes('my-games.html')) {
