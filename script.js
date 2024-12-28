@@ -137,7 +137,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     // Функция для отрисовки списка игр на index.html.
     async function displayGames(gameList) {
-         gameList.innerHTML = '';
+          gameList.innerHTML = '';
+      const user = JSON.parse(localStorage.getItem('user'));
+       const storedIcon = localStorage.getItem('profileIcon');
+
+        if(!user || !storedIcon){
+          console.log("Пользователь не залогинен или нет profileIcon");
+            return;
+        }
+
+
         try {
             const response = await fetch('http://localhost:3000/games');
             if (response.ok) {
@@ -146,8 +155,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     gameList.innerHTML = '<p class="empty-list-message">Список игр пуст, загрузите игру!</p>';
                 }
                  else {
-                    const user = JSON.parse(localStorage.getItem('user'));
                     games.forEach((game, index) => {
+                        if(game.private){
+                            return;
+                        }
                         const gameItem = document.createElement('div');
                         gameItem.classList.add('game-item');
                         const authorIcon = localStorage.getItem('profileIcon');
