@@ -1,0 +1,230 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #eee;
+    background-color: #1a1a1a;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+header {
+    background-color: #2a2a2a;
+    padding: 20px 0;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header nav {
+    display: flex;
+    margin-left: 20px;
+}
+
+header nav a {
+  margin-right: 10px;
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    background-color: #555;
+  border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+header nav a:hover {
+     background-color: #777;
+}
+
+header .header-right {
+    margin-left: auto;
+}
+
+
+main {
+    padding: 40px 0;
+}
+
+main h2 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+main p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+main .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.search-container {
+   display: flex;
+   align-items: center;
+   margin-bottom: 20px;
+   width: 70%;
+   max-width: 600px;
+   text-align: center;
+}
+.search-container input{
+   padding: 10px;
+  margin-right: 10px;
+   border: 1px solid #444;
+    border-radius: 5px 0 0 5px;
+    color: #eee;
+     background-color: #333;
+   flex: 1;
+}
+.search-container button{
+      padding: 10px 20px;
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    border-radius:  0 5px 5px 0;
+    transition: background-color 0.3s ease;
+}
+.search-container button:hover{
+     background-color: #777;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.button:hover {
+     background-color: #777;
+}
+
+.create-host-btn {
+    margin-left: 10px;
+}
+
+.game-list {
+   display: flex;
+   flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.game-item {
+     background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+     width: 300px;
+}
+.game-header {
+      display: flex;
+    align-items: center;
+}
+.game-header h3 {
+     margin: 0 0 10px 10px;
+}
+
+.game-item h3 {
+     margin-top: 0;
+    margin-bottom: 10px;
+}
+.author-avatar {
+  width: 30px;
+  height: 30px;
+ border-radius: 50%;
+}
+
+footer {
+    background-color: #2a2a2a;
+    text-align: center;
+    padding: 20px 0;
+     margin-top: auto;
+}
+
+.empty-list-message {
+    text-align: center;
+    font-style: italic;
+     color: #aaa;
+     margin-bottom: 20px;
+}
+#account-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-icon {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.account-icon img {
+     width: 100px;
+    height: 100px;
+   border-radius: 50%;
+}
+.account-icon button{
+     position: absolute;
+     left: 50%;
+    transform: translate(-50%, 100%);
+    margin-top: 10px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+    header h1 {
+      font-size: 2em;
+    }
+
+    header nav {
+      display: block;
+      text-align: left;
+      margin-top: 10px;
+      margin-left: 0;
+    }
+
+    header nav a {
+       display: inline-block;
+       margin: 5px 5px 5px 0;
+      text-align: center;
+    }
+     header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+   header .header-right {
+       margin-top: 10px;
+       margin-left: 0;
+    }
+    .search-container {
+       width: 100%;
+    }
+
+}

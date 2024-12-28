@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diesel - Личный кабинет</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-left">
+                <h1>Diesel</h1>
+                 <nav>
+                    <a href="index.html">Главная</a>
+                     <a href="#" id="logoutBtn">Выход</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+          <section class="container">
+            <h2>Личный кабинет</h2>
+          <div id="dashboard">
+               <button id="uploadGameBtn" class="button">Загрузить игру</button>
+                 <div id="uploadForm" style="display:none;">
+                   <form id="uploadFormReal" enctype="multipart/form-data">
+                        <label for="gameName">Название игры:</label>
+                       <input type="text" id="gameName" name="gameName" required><br><br>
+                        <label for="gameFile">Файл игры:</label>
+                        <input type="file" id="gameFile" name="gameFile" required><br><br>
+                        <button type="submit" id="submitGameBtn" class="button">Загрузить</button>
+                    </form>
+                </div>
+                <div id="walletInfo">
+                    <h3>Кошелёк</h3>
+                    <p>Ваш баланс: <span id="balance">0</span></p>
+                     <button id="getTransact" class="button">Проверить транзакции</button>
+                </div>
+                 <div id="transactionList"></div>
+            </div>
+          </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Diesel. Все права защищены.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
