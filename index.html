@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diesel - Пародия на Steam</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Diesel</div>
+            <nav>
+                <ul>
+                    <li><a href="#" data-target="store">Магазин</a></li>
+                    <li><a href="#" data-target="community">Сообщество</a></li>
+                    <li><a href="#" data-target="profile">Профиль</a></li>
+                    <li><a href="#" data-target="support">Поддержка</a></li>
+                    <li><a href="#" data-target="library">Библиотека</a></li>
+                </ul>
+            </nav>
+            <div class="auth">
+             <span id="usernameDisplay"></span>  <a href="#" id="loginButton">Войти</a> | <a href="#" id="registerButton">Регистрация</a>
+             <a href="#" id="logoutButton" style="display: none">Выйти</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div id="store" class="page-section active">
+                 <section class="featured">
+                    <h2>Рекомендуем</h2>
+                      <div id="game-list">
+                          <!-- Здесь будут динамически добавляемые карточки игр -->
+                      </div>
+                </section>
+                 <button id="addGameButton" style="display: none">Добавить игру</button>
+                </div>
+
+            <div id="library" class="page-section">
+                <h2>Библиотека</h2>
+                <div id="library-list">
+                <!-- Здесь будут игры из библиотеки -->
+               </div>
+            </div>
+
+             <div id="community" class="page-section">
+                 <h2>Сообщество</h2>
+                 <p>Содержимое сообщества.</p>
+             </div>
+
+             <div id="profile" class="page-section">
+               <h2>Профиль</h2>
+               <div id="profile-info">
+                 <p>Баланс: <span id="userBalance">0</span></p>
+                </div>
+             </div>
+
+            <div id="game" class="page-section">
+                 <div id="game-content"></div>
+            </div>
+
+
+             <div id="support" class="page-section">
+               <h2>Поддержка</h2>
+               <p>Содержимое поддержки.</p>
+             </div>
+
+
+            <section class="news">
+                <h2>Новости Diesel</h2>
+                <article class="news-item">
+                    <h3>Заголовок новости 1</h3>
+                    <p>Текст новости 1</p>
+                    <a href="#">Подробнее</a>
+                </article>
+                <article class="news-item">
+                    <h3>Заголовок новости 2</h3>
+                    <p>Текст новости 2</p>
+                    <a href="#">Подробнее</a>
+                </article>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Модальное окно добавления игры -->
+    <div id="addGameModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Добавить игру</h2>
+            <form id="addGameForm">
+                <label for="gameName">Название:</label>
+                <input type="text" id="gameName" required>
+                <label for="gameDescription">Описание:</label>
+                <textarea id="gameDescription" required></textarea>
+                <label for="gameImage">URL картинки:</label>
+                <input type="url" id="gameImage" required>
+                 <label for="gamePrice">Цена:</label>
+                 <input type="number" id="gamePrice" required>
+                <label for="gameFile">URL файла:</label>
+                <input type="url" id="gameFile" required>
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+    </div>
+
+        <!-- Модальное окно авторизации -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Вход</h2>
+                <form id="loginForm">
+                  <label for="loginEmail">Email:</label>
+                  <input type="email" id="loginEmail" required>
+                  <label for="loginPassword">Пароль:</label>
+                  <input type="password" id="loginPassword" required>
+                  <button type="submit">Войти</button>
+                </form>
+            </div>
+        </div>
+
+      <!-- Модальное окно регистрации -->
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Регистрация</h2>
+                <form id="registerForm">
+                  <label for="registerEmail">Email:</label>
+                  <input type="email" id="registerEmail" required>
+                  <label for="registerPassword">Пароль:</label>
+                  <input type="password" id="registerPassword" required>
+                   <label for="registerPasswordConfirm">Подтвердите пароль:</label>
+                    <input type="password" id="registerPasswordConfirm" required>
+                  <button type="submit">Зарегистрироваться</button>
+                </form>
+            </div>
+        </div>
+
+    <!-- Модальное окно пожертвования -->
+    <div id="donateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Подтверждение пожертвования</h2>
+           <p>Вы действительно хотите пожертвовать <span id="donateGameName"></span> <span id="donateGamePrice"></span>?</p>
+           <button id="confirmDonateButton">Пожертвовать</button>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Diesel. Пародия на Steam.</p>
+        </div>
+    </footer>
+
+ <script src="script.js"></script>
+</body>
+</html>
