@@ -73,13 +73,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     // Регистрация - Имитация отправки формы и входа
-    const registerForm = document.getElementById('registerForm');
+     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', function(event) {
-            event.preventDefault();
+             event.preventDefault();
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+             const password = document.getElementById('password').value;
             if (username && email && password) {
                 alert(`Регистрация пользователя: ${username} ${email} прошла успешно`);
                 // Сохраняем данные в localStorage
@@ -95,13 +95,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
+             event.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             if(email && password) {
                 alert(`Имитация входа пользователя: ${email}`);
                 // Сохраняем данные в localStorage (можно заменить на реальную аутентификацию)
-                localStorage.setItem('user', JSON.stringify({ email, registrationDate: new Date().toISOString() }));
+                 localStorage.setItem('user', JSON.stringify({ email, registrationDate: new Date().toISOString() }));
                 window.location.href = 'dashboard.html'; // Перенаправляем в личный кабинет
             }
             else {
@@ -137,22 +137,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     // Функция для отрисовки списка игр на index.html.
     async function displayGames(gameList) {
-         gameList.innerHTML = '';
+        gameList.innerHTML = '';
         try {
             const response = await fetch('http://localhost:3000/games');
             if (response.ok) {
                 const games = await response.json();
-                 if (games.length === 0) {
-                     gameList.innerHTML = '<p class="empty-list-message">Список игр пуст, загрузите игру!</p>';
-                  }
-                    else {
+                if (games.length === 0) {
+                    gameList.innerHTML = '<p class="empty-list-message">Список игр пуст, загрузите игру!</p>';
+                }
+                 else {
                     const user = JSON.parse(localStorage.getItem('user'));
                     games.forEach((game, index) => {
                         const gameItem = document.createElement('div');
                         gameItem.classList.add('game-item');
                         const authorIcon = localStorage.getItem('profileIcon');
                         let deleteButton = '';
-                     if (user && (game.uploader === user.username || game.uploader === user.email) ) {
+                        if (user && (game.uploader === user.username || game.uploader === user.email) ) {
                             deleteButton = `<button class="delete-game-btn button" data-index="${index}">Удалить</button>`;
                         }
                         const installButton = `<button class="install-game-btn button" data-name="${game.name}" data-file="${game.file}">Установить</button>`;
@@ -190,28 +190,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     // Загрузка "Моих карточек"
-    if (window.location.pathname.includes('my-games.html')) {
-        const myGameList = document.getElementById('myGameList');
-        async function displayMyGames() {
+  if (window.location.pathname.includes('my-games.html')) {
+    const myGameList = document.getElementById('myGameList');
+      async function displayMyGames() {
         myGameList.innerHTML = '';
-        try {
-            const response = await fetch('http://localhost:3000/games');
-             if (response.ok) {
-               const games = await response.json();
-               const user = JSON.parse(localStorage.getItem('user'));
-              const myGames = games.filter(game => game.uploader === user.username || game.uploader === user.email);
+         try {
+             const response = await fetch('http://localhost:3000/games');
+              if (response.ok) {
+                const games = await response.json();
+                  const user = JSON.parse(localStorage.getItem('user'));
+                 const myGames = games.filter(game => game.uploader === user.username || game.uploader === user.email);
 
             if (myGames.length === 0) {
                 myGameList.innerHTML = '<p class="empty-list-message">Вы еще не загрузили игры.</p>';
-              }
+             }
               else{
-                 myGames.forEach((game, index) => {
-                    const gameItem = document.createElement('div');
-                    gameItem.classList.add('game-item');
-                    const authorIcon = localStorage.getItem('profileIcon');
+                myGames.forEach((game, index) => {
+                   const gameItem = document.createElement('div');
+                   gameItem.classList.add('game-item');
+                   const authorIcon = localStorage.getItem('profileIcon');
                     let deleteButton = '';
                     if (user && (game.uploader === user.username || game.uploader === user.email)) {
-                         deleteButton = `<button class="delete-game-btn button" data-index="${index}">Удалить</button>`;
+                        deleteButton = `<button class="delete-game-btn button" data-index="${index}">Удалить</button>`;
                      }
                      const installButton = `<button class="install-game-btn button" data-name="${game.name}" data-file="${game.file}">Установить</button>`;
                     gameItem.innerHTML = `
@@ -221,24 +221,23 @@ document.addEventListener('DOMContentLoaded', function() {
                      </div>
                      <p>Загрузил: ${game.uploader}</p><p>File: ${game.file}</p>${deleteButton}${installButton}`;
                     myGameList.appendChild(gameItem);
-                 });
-              }
-        } else {
-           alert('Ошибка при загрузке списка игр');
+                });
+             }
+            } else {
+              alert('Ошибка при загрузке списка игр');
+            }
+        } catch (error) {
+            console.error('Ошибка при загрузке списка игр:', error);
+            alert('Произошла ошибка!');
         }
-      } catch (error) {
-        console.error('Ошибка при загрузке списка игр:', error);
-        alert('Произошла ошибка!');
-       }
    }
-      displayMyGames();
-
+  displayMyGames();
         myGameList.addEventListener('click', function(event) {
             if (event.target.classList.contains('delete-game-btn')) {
                 const index = event.target.getAttribute('data-index');
                 deleteGame(index);
             }
-            if(event.target.classList.contains('install-game-btn')){
+             if(event.target.classList.contains('install-game-btn')){
                 const name = event.target.getAttribute('data-name');
                 const file = event.target.getAttribute('data-file');
                 installGame(name, file);
@@ -246,42 +245,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     // Функция удаления игры
-    async function deleteGame(index) {
-         try {
-             const response = await fetch('http://localhost:3000/games');
-              if (response.ok) {
-                 const games = await response.json();
-                   games.splice(index, 1);
-                     const responsePut =  await fetch('http://localhost:3000/upload', {
-                          method: 'POST',
-                            headers: {
-                              'Content-Type': 'application/json',
-                          },
-                             body: JSON.stringify(games),
-                  });
-                   if (responsePut.ok) {
-                       const gameList = document.getElementById('gameList');
-                         if (gameList) {
-                             displayGames(gameList);
-                        }
-                        const myGameList = document.getElementById('myGameList');
-                         if(myGameList){
-                             displayMyGames();
-                        }
+  async function deleteGame(index) {
+     try {
+         const response = await fetch('http://localhost:3000/games');
+          if (response.ok) {
+             const games = await response.json();
+                 const gameIndex =  parseInt(index, 10)
+               const responseDelete =  await fetch('http://localhost:3000/deleteGame', {
+                    method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify({index: gameIndex}),
+                });
+               if (responseDelete.ok) {
+                    const gameList = document.getElementById('gameList');
+                     if (gameList) {
+                         displayGames(gameList);
+                    }
+                    const myGameList = document.getElementById('myGameList');
+                     if(myGameList){
+                        displayMyGames();
+                    }
 
-                   } else {
-                     alert('Ошибка загрузки игры');
-                  }
-
-              } else {
-                 alert('Ошибка при загрузке списка игр');
-               }
-         }
-      catch (error) {
-        console.error('Ошибка при загрузке списка игр:', error);
-        alert('Произошла ошибка!');
-       }
+               } else {
+                  alert('Ошибка загрузки игры');
+                }
+           } else {
+              alert('Ошибка при загрузке списка игр');
+           }
+     } catch (error) {
+          console.error('Ошибка при загрузке списка игр:', error);
+           alert('Произошла ошибка!');
     }
+ }
 
     function installGame(name, file) {
         // Создаем имитацию файла для скачивания (на самом деле это фиктивный URL)
