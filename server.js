@@ -19,7 +19,7 @@ function loadGames() {
     const data = fs.readFileSync(gamesFilePath, 'utf-8');
     return JSON.parse(data);
   } catch (error) {
-      // Если файла нет или произошла ошибка при чтении, возвращаем пустой массив
+    // Если файла нет или произошла ошибка при чтении, возвращаем пустой массив
     return [];
   }
 }
@@ -28,7 +28,6 @@ function loadGames() {
 function saveGames(games) {
     fs.writeFileSync(gamesFilePath, JSON.stringify(games, null, 2));
 }
-
 
 // Endpoint для загрузки игр
 app.post('/upload', (req, res) => {
@@ -43,9 +42,23 @@ app.post('/upload', (req, res) => {
 // Endpoint для получения публичных игр
 app.get('/games', (req, res) => {
     const games = loadGames();
-     const publicGames = games.filter(game => !game.private);
-     res.json(publicGames);
+    const publicGames = games.filter(game => !game.private);
+    res.json(publicGames);
 });
+
+// Endpoint для удаления игры (новое)
+app.post('/deleteGame', (req, res) => {
+    const gameIndex = req.body.index;
+      let games = loadGames();
+        if (gameIndex >= 0 && gameIndex < games.length) {
+            games.splice(gameIndex, 1);
+              saveGames(games);
+              res.json({ message: 'Игра удалена успешно!' });
+         } else {
+        res.status(400).json({ message: 'Неверный индекс игры' });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Сервер запущен на порту ${port}`);
