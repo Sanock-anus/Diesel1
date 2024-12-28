@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (username && email && password) {
                 alert(`Регистрация пользователя: ${username} ${email} прошла успешно`);
                 // Сохраняем данные в localStorage
-                localStorage.setItem('user', JSON.stringify({ username, email, registrationDate: new Date().toISOString() }));
+                 localStorage.setItem('user', JSON.stringify({ username, email, registrationDate: new Date().toISOString() }));
                 window.location.href = 'dashboard.html'; // Перенаправляем в личный кабинет
             }
             else{
