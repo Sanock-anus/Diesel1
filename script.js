@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     // Функция для отрисовки списка игр на index.html.
     async function displayGames(gameList) {
-          gameList.innerHTML = '';
+         gameList.innerHTML = '';
       const user = JSON.parse(localStorage.getItem('user'));
        const storedIcon = localStorage.getItem('profileIcon');
 
