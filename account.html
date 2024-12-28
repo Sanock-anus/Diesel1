@@ -3,43 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diesel - Аккаунт</title>
+    <title>Аккаунт</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-           <div class="header-left">
-                <h1>Diesel</h1>
-                <nav>
-                     <a href="index.html">Главная</a>
-                    <a href="login.html">Вход</a>
-                      <a href="register.html">Регистрация</a>
-                      <a href="my-games.html">Мои карточки</a>
-                 </nav>
-            </div>
-        </div>
-    </header>
-    <main>
-        <section class="container main-content">
-          <h2>Аккаунт</h2>
-           <div id="account-info">
-               <div class="account-icon">
-                  <img id="profile-icon" src="default-icon.png" alt="Иконка аккаунта">
-                  <input type="file" id="icon-upload" accept="image/*" style="display:none;">
-                  <button id="change-icon" class="button">Сменить иконку</button>
-               </div>
-               <p>Имя пользователя: <span id="usernameDisplay"></span></p>
-               <p>Зарегистрирован: <span id="days-registered"></span> дней</p>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Diesel. Все права защищены.</p>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+<header>
+  <h1>Игровой портал</h1>
+  <nav>
+    <a href="index.html">Главная</a>
+     <a href="login.html">Вход</a>
+    <a href="register.html">Регистрация</a>
+    <a href="my-games.html" id="myGamesBtn">Мои карточки</a>
+  </nav>
+</header>
+<main>
+  <section class="account-container">
+    <h2>Личный кабинет</h2>
+    <div class="profile-info">
+      <img id="profile-icon" src="default-icon.png" alt="Аватар" class="profile-icon">
+      <p>Привет, <span id="usernameDisplay"></span>!</p>
+      <p>Вы с нами уже <span id="days-registered"></span> дней.</p>
+    </div>
+    <div class="wallet-container">
+      <h3>Кошелек</h3>
+      <p id="balance">Баланс: 0</p>
+      <button class="button" id="getTransact">Показать транзакции</button>
+      <div id="transactionList"></div>
+    </div>
+    <div class="game-upload-container">
+      <h3>Загрузить игру</h3>
+      <button class="button" id="uploadGameBtn">Загрузить игру</button>
+      <form id="uploadForm" style="display: none;">
+        <input type="text" id="gameName" placeholder="Название игры" required>
+        <input type="file" id="gameFile" required>
+        <label>
+          <input type="checkbox" id="isPrivate"> Приватная игра
+        </label>
+          <button type="submit" class="button" id="uploadFormReal">Загрузить</button>
+      </form>
+    </div>
+      <button class="button" id="logoutBtn">Выйти</button>
+  </section>
+</main>
+<footer>
+    <p>&copy; 2024 Игровой портал</p>
+</footer>
+<script src="script.js"></script>
 </body>
-</html>
 </html>
