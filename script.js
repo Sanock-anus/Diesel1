@@ -124,6 +124,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     let games = [
+         {
+       gameId: Date.now(),
+        name: "Название игры",
+        description: "Описание игры",
+        imageUrl: "URL картинки",
+        gameFile: "URL файла",
+        gamePrice: 5,
+        gameAuthor: "Имя автора"
+    }
       {
         gameId: Date.now(),
         name: "Пример игры 1",
