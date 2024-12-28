@@ -124,22 +124,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Функция для отрисовки списка игр на index.html.
     function displayGames(gameList, games) {
         gameList.innerHTML = "";
-        const user = JSON.parse(localStorage.getItem('user'));
-
-          if (!user) {
-            //Если пользователь не авторизован, ничего не отображаем
-           return;
-        }
-
 
         if (!games) {
-            return;
+           return;
         }
 
        const publicGames = games.filter(game => !game.private);
         if (publicGames.length === 0) {
             gameList.innerHTML = '<p class="empty-list-message">Список игр пуст, загрузите игру!</p>';
         } else {
+          const user = JSON.parse(localStorage.getItem('user'));
             publicGames.forEach((game, index) => {
                   const gameItem = document.createElement('div');
                     gameItem.classList.add('game-item');
